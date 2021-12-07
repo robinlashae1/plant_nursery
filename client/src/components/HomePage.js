@@ -6,8 +6,8 @@ export default function HomePage() {
     return (
         <div className="Home">
             <div className="lander">
-                <h1>TEST</h1>
-                <p className="text-muted">App description goes here</p>
+                <h1>ArbiterSports</h1>
+                <p className="text-muted">Streamline your game scheduling process!</p>
             </div>
         </div>
     )
