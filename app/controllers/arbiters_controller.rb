@@ -1,0 +1,2 @@
+class ArbitersController < ApplicationController
+end
