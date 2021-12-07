@@ -3,7 +3,7 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import "../index.css";
 
-export default function SignupPage({ onLogin }) {
+function SignUpPage({ onLogin }) {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [passwordConfirmation, setPasswordConfirmation] = useState("");
@@ -69,3 +69,5 @@ export default function SignupPage({ onLogin }) {
         </div>
     );
 }
+
+export default SignUpPage;

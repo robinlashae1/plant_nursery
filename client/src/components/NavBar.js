@@ -1,7 +1,7 @@
 import React from "react";
 import { Route, Switch } from "react-router-dom";
 import HomePage from "./HomePage";
-import SignupPage from "./SignupPage";
+import SignUpPage from "./SignUpPage";
 import LoginPage from "./LoginPage";
 import NotFound from "./NotFound";
 
@@ -15,7 +15,7 @@ function NavBar() {
         <LoginPage />
       </Route>
       <Route exact path="/signup">
-        <SignupPage />
+        <SignUpPage />
       </Route>
       <Route>
         <NotFound />
