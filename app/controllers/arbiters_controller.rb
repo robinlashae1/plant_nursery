@@ -32,7 +32,7 @@ class ArbitersController < ApplicationController
     def render_not_found_response(exception)
         render json: { error: "#{exception.model} not found" }, status: :not_found
     end
-    def params
+    def patch_params
         params.permit(:name,:hourly_cost,:email,:phone)
     end
 end
