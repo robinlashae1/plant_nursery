@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
+import Alert from "react-bootstrap/Alert"
 import "../index.css";
 
 
@@ -57,6 +58,11 @@ export default function LoginPage({ onLogin }) {
             <Button block size="lg" type="submit" disabled={!validateForm()}>
                 {isLoading ? "Loading..." : "Login"}
             </Button>
+            <Form.Group>
+              {errors.map((err) => (
+                <Alert key={err}>{err}</Alert>
+              ))}
+            </Form.Group>
         </Form>
         </div>
     );

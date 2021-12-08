@@ -1,6 +1,7 @@
 import React,  { useState } from 'react'
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
+import Alert from "react-bootstrap/Alert"
 import "../index.css";
 
 function SignUpPage({ onLogin }) {
@@ -15,26 +16,32 @@ function SignUpPage({ onLogin }) {
     }
 
     function handleSubmit(e) {
-        e.preventDefault();
-        setIsLoading(true);
-        fetch("/login", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ email, password }),
-        }).then((r) => {
-          setIsLoading(false);
-          if (r.ok) {
-            r.json().then((user) => onLogin(user));
-          } else {
-            r.json().then((err) => setErrors(err.errors));
-          }
-        });
+      e.preventDefault();
+      setErrors([]);
+      setIsLoading(true);
+      fetch("/signup", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email,
+          password,
+          password_confirmation: passwordConfirmation,
+          
+        }),
+      }).then((r) => {
+        setIsLoading(false);
+        if (r.ok) {
+          r.json().then((user) => onLogin(user));
+        } else {
+          r.json().then((err) => setErrors(err.errors));
+        }
+      });
     }
 
     return (
-        <div className="Login">
+        <div className="Signup">
         <Form onSubmit={handleSubmit}>
             <Form.Group size="lg" controlId="email">
             <Form.Label>Email</Form.Label>
@@ -65,6 +72,11 @@ function SignUpPage({ onLogin }) {
             <Button block size="lg" type="submit" disabled={!validateForm()}>
                 {isLoading ? "Loading..." : "Signup"}
             </Button>
+            <Form.Group>
+              {errors.map((err) => (
+                <Alert key={err}>{err}</Alert>
+              ))}
+            </Form.Group>
         </Form>
         </div>
     );

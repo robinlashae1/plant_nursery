@@ -5,17 +5,18 @@ import SignUpPage from "./SignUpPage";
 import LoginPage from "./LoginPage";
 import NotFound from "./NotFound";
 
-function NavBar() {
+function NavBar({ setUser }) {
+
   return (
     <Switch>
       <Route exact path="/">
         <HomePage />
       </Route>
       <Route exact path="/login">
-        <LoginPage />
+        <LoginPage onLogin={setUser}/>
       </Route>
       <Route exact path="/signup">
-        <SignUpPage />
+        <SignUpPage onLogin={setUser}/>
       </Route>
       <Route>
         <NotFound />
