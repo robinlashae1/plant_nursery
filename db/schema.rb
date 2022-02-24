@@ -10,34 +10,42 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_12_07_195148) do
+ActiveRecord::Schema.define(version: 2022_02_22_224254) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "arbiters", force: :cascade do |t|
+  create_table "plant_types", force: :cascade do |t|
     t.string "name"
-    t.integer "hourly_cost"
-    t.string "email"
-    t.string "phone"
+    t.string "image"
+    t.string "description"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "courts", force: :cascade do |t|
+  create_table "plants", force: :cascade do |t|
     t.string "name"
-    t.string "location"
-    t.integer "time"
-    t.integer "charge_per_hour"
-    t.integer "team_id"
-    t.integer "arbiter_id"
+    t.string "type"
+    t.integer "age"
+    t.integer "user_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "teams", force: :cascade do |t|
+  create_table "updates", force: :cascade do |t|
+    t.string "status"
+    t.string "comment"
+    t.integer "user_id"
+    t.integer "plant_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "users", force: :cascade do |t|
     t.string "name"
     t.string "email"
+    t.string "username"
+    t.string "password_digest"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

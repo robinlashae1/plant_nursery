@@ -1,0 +1,3 @@
+class PlantType < ApplicationRecord
+
+end

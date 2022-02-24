@@ -1,7 +1,8 @@
 Rails.application.routes.draw do
-  resources :courts
-  resources :teams
-  resources :arbiters
+  resources :plant_types
+  resources :comments
+  resources :users
+  resources :plants
 
   post "/signup", to: "users#create"
   get "/me", to: "users#show"

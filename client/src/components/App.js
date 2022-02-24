@@ -1,21 +1,25 @@
 import React, { useEffect, useState } from "react";
-import Navbar from "react-bootstrap/Navbar";
-import Routes from './NavBar'
-import Nav from "react-bootstrap/Nav";
-import { LinkContainer } from "react-router-bootstrap";
+import NavBar from "./bars/NavBar"
+import HomePage from "./pages/HomePage";
+import OtherPlants from "./pages/OtherPlants";
+import Nursery from "./pages/Nursery";
+import SignUpPage from "./pages/SignUpPage";
+import LoginPage from "./pages/LoginPage"
+import Rescue from "./pages/Rescue";
+import About from "./pages/About";
+import { Route, Switch, BrowserRouter} from "react-router-dom";
 import "../App.css";
 
 function App() {
     const [user, setUser] = useState(null);
+    const [plantsData,setPlantData]=useState([])
 
-    // auto-login
-    // useEffect(() => {
-    //     fetch("/me").then((r) => {
-    //     if (r.ok) {
-    //         r.json().then((user) => setUser(user));
-    //     }
-    //     });
-    // }, []);
+
+   useEffect(() => {
+    fetch("/plant_types")
+    .then((r) => r.json())
+    .then((plants) => setPlantData(plants))
+  }, []);
 
     function handleLogoutClick() {
         fetch("/logout", { method: "DELETE" }).then((r) => {
@@ -24,42 +28,51 @@ function App() {
           }
         });
     }
+    useEffect(() => {
+        fetch("/me").then((r) => {
+        if (r.ok) {
+            r.json()
+            .then((user) => setUser(user));}
+        });
+    }, []);
 
-    // if (!user) return <LoginPage onLogin={setUser} />;
-
-    return (
-        <div className="App container py-3">
-            <Navbar collapseOnSelect bg="light" expand="md" className="mb-3" user={user} setUser={setUser}>
-
-                <LinkContainer to="/">
-                    <Navbar.Brand className="font-weight-bold text-muted">
-                        ArbiterSports
-                    </Navbar.Brand>
-                </LinkContainer>
-
-                <Navbar.Toggle />
-
-                <Navbar.Collapse className="justify-content-end">
-                    <Nav activeKey={window.location.pathname}>
-                    {user ? (
-                        <Nav.Link onClick={handleLogoutClick}>Logout</Nav.Link>
-                    ) : (
-                    <>
-                        <LinkContainer to="/signup">
-                            <Nav.Link>Signup</Nav.Link>
-                        </LinkContainer>
-                        <LinkContainer to="/login">
-                            <Nav.Link>Login</Nav.Link>
-                        </LinkContainer>
-                    </>
-                    )}
-                    </Nav>
-                </Navbar.Collapse>
-
-            </Navbar>
-            <Routes />
-        </div>
-    );
-}
+    useEffect(() => {
+        fetch("/plant_types").then((r) => {
+        if (r.ok) {
+            r.json().then((plants) => setPlantData(plants));
+        }
+        });
+    }, []);
+console.log(plantsData)
+          return (
+        <div className='App'>
+      <BrowserRouter>
+      <Switch>
+          <Route exact path="/" >
+            <HomePage />
+          </Route>
+          <Route exact path="/about">
+            <About/>
+          </Route>
+          <Route exact path="/nursery" >
+            <Nursery />
+          </Route>
+          <Route exact path="/rescue">
+            <Rescue/>
+          </Route>
+          <Route exact path="/all_Plants">
+            <OtherPlants plants={plantsData} />
+          </Route>
+          <Route exact path="/signup">
+            <SignUpPage onLogin={setUser}/>
+          </Route>
+          <Route exact path="/login">
+            <LoginPage onLogin={setUser}/>
+          </Route>
+      </Switch>
+      </BrowserRouter>
+    </div>
+  )}
+// }
 
 export default App;
